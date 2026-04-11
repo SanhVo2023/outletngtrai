@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState, type FormEvent } from "react";
 
-const GAS_URL = process.env.NEXT_PUBLIC_GAS_URL || "";
+const GAS_URL = "https://script.google.com/macros/s/AKfycbx5v2PxjACmodCPXun893mlkML-UFq0_mHxJr7ImIutbj09KVQaJWRS2Ir23MHKQjkt6A/exec";
 
 type FormState = "idle" | "submitting" | "success" | "error";
 
@@ -133,6 +133,10 @@ export default function Home() {
               <p className="text-sm text-white/40">
                 Kính mắt chính hãng &mdash; Giá Outlet cực sốc
               </p>
+              <div className="mt-3 inline-flex items-center gap-2 bg-[#f5c518]/10 border border-[#f5c518]/20 rounded-lg px-4 py-2">
+                <span className="text-[#f5c518] text-sm font-bold">Voucher giảm thêm $10</span>
+                <span className="text-white/40 text-xs">cho mỗi đơn hàng tại Outlet</span>
+              </div>
             </div>
           </div>
         </div>
@@ -162,7 +166,7 @@ export default function Home() {
               <span className="text-[#dc2626]">Ưu Đãi Độc Quyền</span>
             </h2>
             <p className="text-sm text-white/40 leading-relaxed">
-              Đăng ký để nhận mã giảm giá qua SMS ngay
+              Đăng ký để nhận voucher giảm thêm <span className="text-[#f5c518] font-semibold">$10</span> cho mỗi đơn hàng tại Outlet qua SMS
             </p>
           </div>
 
@@ -181,7 +185,7 @@ export default function Home() {
                   <p className="text-2xl font-black text-[#f5c518] tracking-widest">{voucherCode}</p>
                 </div>
               )}
-              <p className="text-xs text-white/30">Mã voucher đã được gửi qua SMS đến số điện thoại của bạn</p>
+              <p className="text-xs text-white/30">Mã voucher giảm thêm $10 cho mỗi đơn hàng đã được gửi qua SMS</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-3 animate-fade-in-up animate-delay-200">
