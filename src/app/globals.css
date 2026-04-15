@@ -1,17 +1,17 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-background: #0a0a0a;
+  --color-background: #dc2626;
   --color-foreground: #ffffff;
-  --color-brand-yellow: #f5c518;
-  --color-brand-yellow-hover: #ffd84d;
   --color-brand-red: #dc2626;
+  --color-brand-red-dark: #b91c1c;
+  --color-brand-yellow: #f5c518;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 body {
-  background: #0a0a0a;
+  background: #dc2626;
   color: #ffffff;
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -22,7 +22,7 @@ body {
   width: 0;
 }
 
-/* Sunburst rays */
+/* Sunburst rays on red bg */
 @keyframes sunburst-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
@@ -30,28 +30,20 @@ body {
 
 .sunburst {
   background: repeating-conic-gradient(
-    rgba(255, 255, 255, 0.03) 0deg 10deg,
+    rgba(255, 255, 255, 0.04) 0deg 10deg,
     transparent 10deg 20deg
   );
   animation: sunburst-spin 60s linear infinite;
 }
 
-.sunburst-red {
-  background: repeating-conic-gradient(
-    rgba(220, 38, 38, 0.07) 0deg 10deg,
-    transparent 10deg 20deg
-  );
-  animation: sunburst-spin 45s linear infinite reverse;
-}
-
 /* Pulse for CTA */
-@keyframes pulse-yellow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(245, 197, 24, 0.4); }
-  50% { box-shadow: 0 0 0 14px rgba(245, 197, 24, 0); }
+@keyframes pulse-btn {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.3); }
+  50% { box-shadow: 0 0 0 14px rgba(0, 0, 0, 0); }
 }
 
-.pulse-yellow {
-  animation: pulse-yellow 2s infinite;
+.pulse-btn {
+  animation: pulse-btn 2s infinite;
 }
 
 /* Fade in */
@@ -64,37 +56,19 @@ body {
   animation: fadeInUp 0.6s ease-out forwards;
 }
 
-.animate-delay-100 { animation-delay: 0.1s; opacity: 0; }
 .animate-delay-200 { animation-delay: 0.2s; opacity: 0; }
 .animate-delay-300 { animation-delay: 0.3s; opacity: 0; }
-.animate-delay-400 { animation-delay: 0.4s; opacity: 0; }
 
 input:focus {
   outline: none;
 }
 
-/* Scrolling discount ticker */
+/* Scrolling ticker */
 @keyframes ticker {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
 
 .ticker-scroll {
-  animation: ticker 12s linear infinite;
-}
-
-/* Bold SALE text stroke */
-.sale-text-stroke {
-  -webkit-text-stroke: 2px rgba(255, 255, 255, 0.08);
-  color: transparent;
-}
-
-/* Float */
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
-
-.animate-float {
-  animation: float 3s ease-in-out infinite;
+  animation: ticker 10s linear infinite;
 }

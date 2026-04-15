@@ -7,7 +7,7 @@ const GAS_URL = "https://script.google.com/macros/s/AKfycbzv_G-W5oBUjiNdN4V00eSP
 
 type FormState = "idle" | "submitting" | "success" | "error";
 
-const DISCOUNTS = ["-10%", "-15%", "-20%", "-30%", "-40%", "-50%", "-60%", "-70%", "-80%"];
+const DISCOUNTS = ["GIẢM 10%", "GIẢM 20%", "GIẢM 30%", "GIẢM 50%", "GIẢM 70%", "XẢ HÀNG", "HÀNG HIỆU"];
 
 export default function Home() {
   const [name, setName] = useState("");
@@ -71,10 +71,15 @@ export default function Home() {
   }
 
   return (
-    <main className="flex flex-col min-h-dvh bg-[#0a0a0a] relative overflow-hidden">
+    <main className="flex flex-col min-h-dvh bg-[#dc2626] relative overflow-hidden">
+      {/* Sunburst on full page */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="sunburst absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full" />
+      </div>
+
       {/* ===== HEADER ===== */}
-      <header className="relative z-20 bg-black border-b border-white/5">
-        <div className="flex items-center justify-center py-3 px-4">
+      <header className="relative z-20 bg-[#dc2626] pt-4 pb-2">
+        <div className="flex items-center justify-center px-4">
           <Image
             src="/logo.png"
             alt="Mắt Việt"
@@ -86,106 +91,87 @@ export default function Home() {
         </div>
       </header>
 
-      {/* ===== HERO ===== */}
-      <section className="relative z-10 overflow-hidden">
-        <div className="relative bg-gradient-to-b from-black via-[#0a0a0a] to-[#0a0a0a] py-10 px-4">
-          {/* Sunburst rays */}
-          <div className="absolute inset-0 overflow-hidden">
-            <div className="sunburst absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full" />
-            <div className="sunburst-red absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full" />
-          </div>
+      {/* ===== HERO: BLACK CARD (like campaign) ===== */}
+      <section className="relative z-10 px-5 pt-4 pb-2">
+        <div className="mx-auto max-w-sm bg-black rounded-3xl p-6 text-center shadow-2xl shadow-black/40">
+          {/* Brand */}
+          <h1 className="text-2xl font-black text-white tracking-tight mb-0.5">
+            MẮT VIỆT{" "}
+            <span className="text-[#dc2626] bg-white px-2 py-0.5 rounded-md text-xl ml-1">
+              OUTLET
+            </span>
+          </h1>
+          <p className="text-white/50 text-xs mb-4">
+            119 Nguyễn Trãi, P. Bến Thành, TP. HCM
+          </p>
 
-          {/* Subtle red glow */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-[radial-gradient(ellipse,rgba(220,38,38,0.1),transparent_70%)] pointer-events-none" />
+          {/* Main message */}
+          <p className="text-white/70 text-sm font-semibold uppercase tracking-wide mb-2">
+            Xả hàng mắt kính hàng hiệu
+          </p>
 
-          <div className="relative text-center">
-            {/* Ghost SALE text */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none" aria-hidden="true">
-              <span className="sale-text-stroke text-[120px] font-black tracking-tighter leading-none">
-                SALE
-              </span>
-            </div>
-
-            <div className="relative z-10 py-4">
-              {/* Outlet badge */}
-              <div className="inline-flex items-center gap-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full px-4 py-1.5 mb-4">
-                <span className="w-2 h-2 rounded-full bg-[#dc2626] animate-pulse" />
-                <span className="text-xs font-semibold uppercase tracking-widest text-white/80">
-                  Outlet Nguyễn Trãi
-                </span>
-              </div>
-
-              {/* OUTLET SALE */}
-              <h1 className="text-5xl font-black text-white tracking-tight mb-1">
-                <span className="text-[#dc2626]">OUTLET</span> SALE
-              </h1>
-
-              {/* 50%++ */}
-              <div className="flex items-center justify-center gap-2 mb-4">
-                <div className="h-px flex-1 max-w-[60px] bg-gradient-to-r from-transparent to-white/20" />
-                <span className="text-2xl font-black text-[#f5c518]">
-                  UP TO 50%
-                  <span className="text-[#dc2626]">++</span>
-                </span>
-                <div className="h-px flex-1 max-w-[60px] bg-gradient-to-l from-transparent to-white/20" />
-              </div>
-
-              <p className="text-sm text-white/40">
-                Kính mắt chính hãng &mdash; Giá Outlet cực sốc
-              </p>
-              <div className="mt-3 inline-flex items-center gap-2 bg-[#f5c518]/10 border border-[#f5c518]/20 rounded-lg px-4 py-2">
-                <span className="text-[#f5c518] text-sm font-bold">Voucher giảm thêm $10</span>
-                <span className="text-white/40 text-xs">cho mỗi đơn hàng tại Outlet</span>
-              </div>
+          {/* Big 70%++ */}
+          <div className="flex items-baseline justify-center gap-1 mb-3">
+            <span className="text-7xl font-black text-white leading-none">70</span>
+            <div className="flex flex-col items-start">
+              <span className="text-3xl font-black text-[#f5c518] leading-none">%</span>
+              <span className="text-lg font-black text-[#f5c518] leading-none -mt-1">++</span>
             </div>
           </div>
-        </div>
 
-        {/* ===== RED DISCOUNT TICKER ===== */}
-        <div className="relative bg-[#dc2626] py-2.5 overflow-hidden">
-          <div className="ticker-scroll flex whitespace-nowrap">
-            {[...DISCOUNTS, ...DISCOUNTS].map((d, i) => (
-              <span
-                key={i}
-                className="inline-flex items-center mx-4 text-white font-black text-lg"
-              >
-                <span className="text-2xl">{d}</span>
-                <span className="mx-4 w-1.5 h-1.5 rounded-full bg-white/40" />
-              </span>
-            ))}
+          {/* Voucher info */}
+          <div className="bg-white/10 rounded-xl px-4 py-2.5">
+            <p className="text-white text-sm font-bold">
+              Nhận thêm voucher giảm <span className="text-[#f5c518]">10%</span>
+            </p>
+            <p className="text-white/50 text-xs">cho mỗi đơn hàng tại Outlet</p>
           </div>
         </div>
       </section>
 
+      {/* ===== WHITE TICKER ===== */}
+      <div className="relative z-10 bg-white py-2 my-3 overflow-hidden">
+        <div className="ticker-scroll flex whitespace-nowrap">
+          {[...DISCOUNTS, ...DISCOUNTS].map((d, i) => (
+            <span
+              key={i}
+              className="inline-flex items-center mx-3 text-[#dc2626] font-black text-sm"
+            >
+              {d}
+              <span className="mx-3 w-1 h-1 rounded-full bg-[#dc2626]/30" />
+            </span>
+          ))}
+        </div>
+      </div>
+
       {/* ===== FORM SECTION ===== */}
-      <section className="relative z-10 px-4 pt-6 pb-4 flex-1 flex flex-col">
-        <div className="mx-auto w-full max-w-md">
-          <div className="text-center mb-5 animate-fade-in-up">
-            <h2 className="text-xl font-bold tracking-tight text-white mb-1.5">
-              Nhận Voucher{" "}
-              <span className="text-[#dc2626]">Ưu Đãi Độc Quyền</span>
+      <section className="relative z-10 px-5 pt-2 pb-4 flex-1 flex flex-col">
+        <div className="mx-auto w-full max-w-sm">
+          <div className="text-center mb-4 animate-fade-in-up">
+            <h2 className="text-xl font-bold tracking-tight text-white mb-1">
+              Nhận Voucher Ưu Đãi
             </h2>
-            <p className="text-sm text-white/40 leading-relaxed">
-              Đăng ký để nhận voucher giảm thêm <span className="text-[#f5c518] font-semibold">$10</span> cho mỗi đơn hàng tại Outlet qua SMS
+            <p className="text-sm text-white/70 leading-relaxed">
+              Đăng ký để nhận voucher giảm thêm <span className="text-white font-bold">10%</span> qua SMS
             </p>
           </div>
 
           {formState === "success" ? (
-            <div className="animate-fade-in-up bg-[#111] rounded-2xl border border-[#f5c518]/30 p-6 text-center shadow-lg shadow-black/30">
-              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[#f5c518] flex items-center justify-center">
-                <svg className="w-8 h-8 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+            <div className="animate-fade-in-up bg-black rounded-2xl p-6 text-center shadow-xl shadow-black/30">
+              <div className="w-14 h-14 mx-auto mb-3 rounded-full bg-[#f5c518] flex items-center justify-center">
+                <svg className="w-7 h-7 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                 </svg>
               </div>
-              <h2 className="text-xl font-bold text-white mb-2">Đăng Ký Thành Công!</h2>
-              <p className="text-white/40 text-sm mb-4">{message}</p>
+              <h2 className="text-lg font-bold text-white mb-2">Đăng Ký Thành Công!</h2>
+              <p className="text-white/50 text-sm mb-4">{message}</p>
               {voucherCode && (
-                <div className="bg-black rounded-xl border border-[#f5c518]/20 p-4 mb-3">
-                  <p className="text-xs text-white/30 uppercase tracking-wider mb-1">Mã Voucher của bạn</p>
+                <div className="bg-white/10 rounded-xl p-4 mb-3">
+                  <p className="text-xs text-white/40 uppercase tracking-wider mb-1">Mã Voucher của bạn</p>
                   <p className="text-2xl font-black text-[#f5c518] tracking-widest">{voucherCode}</p>
                 </div>
               )}
-              <p className="text-xs text-white/30">Mã voucher giảm thêm $10 cho mỗi đơn hàng đã được gửi qua SMS</p>
+              <p className="text-xs text-white/40">Voucher giảm 10% đã được gửi qua SMS</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-3 animate-fade-in-up animate-delay-200">
@@ -195,7 +181,7 @@ export default function Home() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 disabled={formState === "submitting"}
-                className="w-full bg-[#141414] border border-white/8 rounded-xl px-4 py-3.5 text-white placeholder:text-white/25 text-sm focus:border-[#dc2626]/50 transition-colors disabled:opacity-50"
+                className="w-full bg-white/15 border border-white/20 rounded-xl px-4 py-3.5 text-white placeholder:text-white/50 text-sm focus:border-white/50 focus:bg-white/20 transition-colors disabled:opacity-50"
               />
               <input
                 type="tel"
@@ -203,7 +189,7 @@ export default function Home() {
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 disabled={formState === "submitting"}
-                className="w-full bg-[#141414] border border-white/8 rounded-xl px-4 py-3.5 text-white placeholder:text-white/25 text-sm focus:border-[#dc2626]/50 transition-colors disabled:opacity-50"
+                className="w-full bg-white/15 border border-white/20 rounded-xl px-4 py-3.5 text-white placeholder:text-white/50 text-sm focus:border-white/50 focus:bg-white/20 transition-colors disabled:opacity-50"
               />
               <input
                 type="email"
@@ -211,11 +197,11 @@ export default function Home() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={formState === "submitting"}
-                className="w-full bg-[#141414] border border-white/8 rounded-xl px-4 py-3.5 text-white placeholder:text-white/25 text-sm focus:border-[#dc2626]/50 transition-colors disabled:opacity-50"
+                className="w-full bg-white/15 border border-white/20 rounded-xl px-4 py-3.5 text-white placeholder:text-white/50 text-sm focus:border-white/50 focus:bg-white/20 transition-colors disabled:opacity-50"
               />
 
               {formState === "error" && message && (
-                <div className="bg-red-950/40 border border-red-800/30 rounded-xl px-4 py-3 text-red-400 text-xs">
+                <div className="bg-black/30 border border-white/20 rounded-xl px-4 py-3 text-white text-xs">
                   {message}
                 </div>
               )}
@@ -223,7 +209,7 @@ export default function Home() {
               <button
                 type="submit"
                 disabled={formState === "submitting"}
-                className="pulse-yellow w-full bg-[#f5c518] hover:bg-[#ffd84d] text-black font-bold text-sm py-4 rounded-xl transition-all active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed disabled:animate-none mt-1"
+                className="pulse-btn w-full bg-black text-white font-bold text-sm py-4 rounded-xl transition-all hover:bg-black/80 active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed disabled:animate-none mt-1"
               >
                 {formState === "submitting" ? (
                   <span className="flex items-center justify-center gap-2">
@@ -238,7 +224,7 @@ export default function Home() {
                 )}
               </button>
 
-              <p className="text-[10px] text-white/20 text-center leading-relaxed pt-1">
+              <p className="text-[10px] text-white/40 text-center leading-relaxed pt-1">
                 Bằng việc đăng ký, bạn đồng ý nhận thông tin ưu đãi từ Mắt Việt qua SMS và email.
               </p>
             </form>
@@ -247,16 +233,16 @@ export default function Home() {
       </section>
 
       {/* ===== FOOTER ===== */}
-      <footer className="relative z-10 mt-auto bg-black border-t border-white/5">
-        <div className="mx-auto max-w-md px-4 py-5">
-          <div className="text-center space-y-1">
-            <p className="text-xs text-white/40 font-medium">
-              Mắt Việt Outlet &mdash; Nguyễn Trãi
+      <footer className="relative z-10 mt-auto bg-black/20">
+        <div className="mx-auto max-w-sm px-4 py-4">
+          <div className="text-center space-y-0.5">
+            <p className="text-xs text-white/70 font-medium">
+              Mắt Việt Outlet &mdash; 119 Nguyễn Trãi
             </p>
-            <p className="text-[10px] text-white/20">
+            <p className="text-[10px] text-white/40">
               Chuỗi bán lẻ kính mắt chính hãng từ năm 1989
             </p>
-            <p className="text-[10px] text-white/15">
+            <p className="text-[10px] text-white/30">
               &copy; {new Date().getFullYear()} Mắt Việt. All rights reserved.
             </p>
           </div>
