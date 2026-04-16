@@ -3,8 +3,7 @@
 import Image from "next/image";
 import { useState, type FormEvent } from "react";
 
-// TODO: Replace with the deployed Hung Vuong GAS Web App URL
-const GAS_URL = "https://script.google.com/macros/s/REPLACE_WITH_HUNGVUONG_GAS_URL/exec";
+const GAS_URL = "https://script.google.com/macros/s/AKfycbydUC8f45a15Rmp7G7aa1m0f2a9PP7UbCRa0Y7SDD6Infk8Vqrs1KRpaBLyW9mw-qb2/exec";
 
 type FormState = "idle" | "submitting" | "success" | "error";
 
