@@ -1,17 +1,18 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-background: #dc2626;
   --color-foreground: #ffffff;
   --color-brand-red: #dc2626;
   --color-brand-red-dark: #b91c1c;
   --color-brand-yellow: #f5c518;
+  --color-brand-yellow-bright: #fde047;
+  --color-brand-navy: #1e3a8a;
+  --color-brand-navy-deep: #172554;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 body {
-  background: #dc2626;
   color: #ffffff;
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -22,7 +23,7 @@ body {
   width: 0;
 }
 
-/* Sunburst rays on red bg */
+/* Sunburst rays */
 @keyframes sunburst-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
@@ -36,6 +37,15 @@ body {
   animation: sunburst-spin 60s linear infinite;
 }
 
+/* Yellow sunburst with navy rays */
+.sunburst-navy {
+  background: repeating-conic-gradient(
+    rgba(30, 58, 138, 0.08) 0deg 10deg,
+    transparent 10deg 20deg
+  );
+  animation: sunburst-spin 60s linear infinite;
+}
+
 /* Pulse for CTA */
 @keyframes pulse-btn {
   0%, 100% { box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.3); }
@@ -44,6 +54,16 @@ body {
 
 .pulse-btn {
   animation: pulse-btn 2s infinite;
+}
+
+/* Pulse for navy CTA on yellow bg */
+@keyframes pulse-navy {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(30, 58, 138, 0.5); }
+  50% { box-shadow: 0 0 0 14px rgba(30, 58, 138, 0); }
+}
+
+.pulse-navy {
+  animation: pulse-navy 2s infinite;
 }
 
 /* Fade in */
@@ -71,4 +91,29 @@ input:focus {
 
 .ticker-scroll {
   animation: ticker 10s linear infinite;
+}
+
+/* GRAND OPENING text with white fill + navy outline (3D effect) */
+.text-outline-navy {
+  color: #ffffff;
+  -webkit-text-stroke: 3px #1e3a8a;
+  text-shadow:
+    0 4px 0 #172554,
+    0 5px 8px rgba(0, 0, 0, 0.25);
+  paint-order: stroke fill;
+}
+
+/* Huge percentage text */
+.text-percent-hero {
+  color: #ffffff;
+  -webkit-text-stroke: 4px #1e3a8a;
+  text-shadow:
+    0 6px 0 #172554,
+    0 8px 12px rgba(0, 0, 0, 0.3);
+  paint-order: stroke fill;
+}
+
+/* OFF badge tilt */
+.off-badge {
+  transform: rotate(-8deg);
 }

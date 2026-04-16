@@ -8,15 +8,8 @@ const geistSans = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "Mắt Việt Outlet | Ưu Đãi Đặc Biệt",
-  description:
-    "Đăng ký nhận voucher ưu đãi độc quyền từ Mắt Việt Outlet - Sale lên đến 50%++",
-  openGraph: {
-    title: "Mắt Việt Outlet | Ưu Đãi Đặc Biệt",
-    description:
-      "Đăng ký nhận voucher ưu đãi độc quyền từ Mắt Việt Outlet",
-    type: "website",
-  },
+  title: "Mắt Việt | Ưu Đãi Đặc Biệt",
+  description: "Đăng ký nhận ưu đãi độc quyền từ Mắt Việt",
 };
 
 export const viewport: Viewport = {
