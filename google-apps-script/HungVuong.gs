@@ -224,8 +224,11 @@ function sendSMSForPhone(phone) {
   }
 
   var smsTemplate = getSetting("SMS_TEMPLATE");
-  var smsGiftName = removeDiacritics(giftName);
-  var smsMessage = smsTemplate.replace("{GIFT}", smsGiftName);
+  // Strip diacritics from the whole final message — eSMS non-Unicode (IsUnicode: 0)
+  // rejects or garbles any Vietnamese diacritic character.
+  var smsMessage = removeDiacritics(
+    smsTemplate.replace("{GIFT}", giftName)
+  );
 
   var esmsPayload = {
     ApiKey:      getSetting("ESMS_API_KEY"),
