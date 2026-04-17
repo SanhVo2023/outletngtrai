@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 
 const GAS_URL = "https://script.google.com/macros/s/AKfycbyU1tgi50uyUN3YtwrkITk9QVaqy0kWzJyaZEhs2heik84Nmlon4imfx1V-nUwfk9N3/exec";
 
@@ -51,6 +51,8 @@ export default function HungVuongPage() {
   const [message, setMessage] = useState("");
   const [wonGift, setWonGift] = useState<Gift | null>(null);
   const [wheelRotation, setWheelRotation] = useState(0);
+  const notifiedRef = useRef(false);
+  const phoneRef = useRef("");
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -81,6 +83,7 @@ export default function HungVuongPage() {
       const res = await fetch(GAS_URL, {
         method: "POST",
         body: JSON.stringify({
+          action: "spin",
           hoTen: name.trim(),
           sdt: phoneClean,
           email: email.trim(),
@@ -95,6 +98,8 @@ export default function HungVuongPage() {
         const gift = GIFTS.find((g) => g.slot === data.giftSlot);
         if (gift) {
           setWonGift({ ...gift, name: data.giftName, code: data.giftCode });
+          phoneRef.current = phoneClean;
+          notifiedRef.current = false;
           setFormState("ready");
         } else {
           setFormState("error");
@@ -109,6 +114,21 @@ export default function HungVuongPage() {
       setMessage("Không thể kết nối server. Vui lòng thử lại sau.");
     }
   }
+
+  // Fire "notify" when result becomes visible — SMS delivery syncs with popup
+  useEffect(() => {
+    if (formState !== "result" || notifiedRef.current || !phoneRef.current) return;
+    notifiedRef.current = true;
+    fetch(GAS_URL, {
+      method: "POST",
+      body: JSON.stringify({ action: "notify", sdt: phoneRef.current }),
+      headers: { "Content-Type": "text/plain" },
+      redirect: "follow",
+      keepalive: true,
+    }).catch(() => {
+      // Silent — logged row on server will show "Chưa gửi", admin can resend manually
+    });
+  }, [formState]);
 
   function handleSpin() {
     if (!wonGift || formState === "spinning") return;
