@@ -39,8 +39,8 @@ function setupEnvironment() {
   var dataSheet = ss.getSheetByName("Data");
   if (!dataSheet) {
     dataSheet = ss.insertSheet("Data");
-    dataSheet.appendRow(["Thời gian", "Họ Tên", "SĐT", "Email", "Mã Quà", "Tên Quà", "Trạng thái SMS"]);
-    dataSheet.getRange("A1:G1").setFontWeight("bold").setBackground("#1e3a8a").setFontColor("#ffffff");
+    dataSheet.appendRow(["Thời gian", "Họ Tên", "SĐT", "Email", "Mã Quà", "Tên Quà", "Trạng thái SMS", "Nội dung SMS"]);
+    dataSheet.getRange("A1:H1").setFontWeight("bold").setBackground("#1e3a8a").setFontColor("#ffffff");
     dataSheet.setColumnWidth(1, 160);
     dataSheet.setColumnWidth(2, 200);
     dataSheet.setColumnWidth(3, 140);
@@ -48,6 +48,7 @@ function setupEnvironment() {
     dataSheet.setColumnWidth(5, 180);
     dataSheet.setColumnWidth(6, 280);
     dataSheet.setColumnWidth(7, 180);
+    dataSheet.setColumnWidth(8, 500);
     dataSheet.setFrozenRows(1);
     // Force SĐT column to TEXT format so leading zeros are preserved
     dataSheet.getRange("C:C").setNumberFormat("@");
@@ -60,7 +61,7 @@ function setupEnvironment() {
     settingsSheet.appendRow(["ESMS_API_KEY",    "D7B626667A40553DE342055F58623B"]);
     settingsSheet.appendRow(["ESMS_SECRET_KEY", "ACE70FD4BA61E127C490963CFD1BA4"]);
     settingsSheet.appendRow(["BRANDNAME",       "MATVIET.VN"]);
-    settingsSheet.appendRow(["SMS_TEMPLATE",    "Quy Khach than men! Cam on QK da tham gia Khai Truong MV Hung Vuong. QK nhan duoc {GIFT}. Kinh chuc Quy Khach that nhieu suc khoe."]);
+    settingsSheet.appendRow(["SMS_TEMPLATE",    "Quy Khach than men! QK nhan duoc {GIFT}. Kinh chuc Quy Khach that nhieu suc khoe."]);
     settingsSheet.getRange("A1:B1").setFontWeight("bold").setBackground("#fff2cc");
     settingsSheet.setColumnWidth(1, 220);
     settingsSheet.setColumnWidth(2, 600);
@@ -72,6 +73,41 @@ function setupEnvironment() {
     "- Sheet 'Settings' đã điền sẵn eSMS keys. Kiểm tra lại nếu cần.\n" +
     "- Deploy Web App (Execute as: Me, Access: Anyone) và lấy URL."
   );
+}
+
+// Chạy hàm này trên sheet đã tồn tại để:
+// - Cập nhật SMS_TEMPLATE mới trong Settings
+// - Thêm cột H "Nội dung SMS" vào Data nếu chưa có
+function upgradeToV2() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+
+  var settingsSheet = ss.getSheetByName("Settings");
+  if (settingsSheet) {
+    var data = settingsSheet.getDataRange().getValues();
+    var newTemplate = "Quy Khach than men! QK nhan duoc {GIFT}. Kinh chuc Quy Khach that nhieu suc khoe.";
+    for (var i = 1; i < data.length; i++) {
+      if (data[i][0] === "SMS_TEMPLATE") {
+        settingsSheet.getRange(i + 1, 2).setValue(newTemplate);
+        break;
+      }
+    }
+  }
+
+  var dataSheet = ss.getSheetByName("Data");
+  if (dataSheet) {
+    var header = dataSheet.getRange(1, 1, 1, dataSheet.getLastColumn()).getValues()[0];
+    if (header.indexOf("Nội dung SMS") === -1) {
+      var newCol = dataSheet.getLastColumn() + 1;
+      dataSheet.getRange(1, newCol)
+        .setValue("Nội dung SMS")
+        .setFontWeight("bold")
+        .setBackground("#1e3a8a")
+        .setFontColor("#ffffff");
+      dataSheet.setColumnWidth(newCol, 500);
+    }
+  }
+
+  Browser.msgBox("✅ Đã cập nhật template SMS và thêm cột Nội dung SMS.");
 }
 
 // Chạy hàm này để sửa lỗi mất số 0 đầu SĐT ở sheet Data đã có
@@ -265,6 +301,7 @@ function sendSMSForPhone(phone) {
   }
 
   dataSheet.getRange(found.rowIndex, 7).setValue(smsStatus);
+  dataSheet.getRange(found.rowIndex, 8).setValue(smsMessage);
   return { ok: smsStatus === "Gửi thành công", message: smsStatus };
 }
 
@@ -332,7 +369,7 @@ function doPost(e) {
       // Ensure phone column stays text (preserves leading zero even after user manually edits)
       dataSheet.getRange("C:C").setNumberFormat("@");
       var timeStamp = Utilities.formatDate(new Date(), "GMT+7", "dd/MM/yyyy HH:mm:ss");
-      dataSheet.appendRow([timeStamp, hoTen, sdt, email, gift.code, gift.name, "Chưa gửi"]);
+      dataSheet.appendRow([timeStamp, hoTen, sdt, email, gift.code, gift.name, "Chưa gửi", ""]);
       // Force text format on just-written phone cell as belt-and-braces
       dataSheet.getRange(dataSheet.getLastRow(), 3).setNumberFormat("@").setValue(sdt);
       SpreadsheetApp.flush();

@@ -116,6 +116,15 @@ export default function HungVuongPage() {
     }
   }
 
+  // Preload all wheel gift icons on mount so the wheel renders fully populated
+  // the instant it shows (no pop-in)
+  useEffect(() => {
+    GIFTS.forEach((g) => {
+      const img = new window.Image();
+      img.src = g.image;
+    });
+  }, []);
+
   // Preload the winning banner as soon as we know which gift was allocated.
   // Buys ~5s of loading time (form latency + spin animation) before the result
   // screen actually renders the <Image>, so it appears instantly.
