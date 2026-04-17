@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 
-const GAS_URL = "https://script.google.com/macros/s/AKfycbwQG8TRLY7TW85EGuDVyG3m8wVDkZ30RlioSbczh7cQt5nXbOMje4dPEC-OXP9qtEJ-/exec";
+const GAS_URL = "https://script.google.com/macros/s/AKfycby5xRTHaom7RbmUtQMbyqYeQCqpF8lovDCpqsWT_pPAbvVNCwaaO092Op4eBlXxUWnS/exec";
 
 type FormState = "idle" | "submitting" | "ready" | "spinning" | "result" | "error";
 
@@ -20,13 +20,13 @@ type Gift = {
 
 // 7 gift slots matching the GAS Gifts sheet
 const GIFTS: Gift[] = [
-  { slot: 1, name: "Giá đỡ điện thoại mascot Mắt Việt", short: "Giá đỡ\nđiện thoại", code: "GIADODT",        image: "/gifts/1.svg", banner: "/gifts/banners/gia-do-dien-thoai.jpg",     segmentColor: "#1e3a8a", textColor: "#fde047" },
-  { slot: 2, name: "Quạt xếp cầm tay",                  short: "Quạt xếp\ncầm tay",  code: "QUATXEPCAMTAY", image: "/gifts/2.svg", banner: "/gifts/banners/quat-cam-tay.jpg",          segmentColor: "#dc2626", textColor: "#ffffff" },
-  { slot: 3, name: "Phụ kiện đính kèm khăn",            short: "Phụ kiện\nkèm khăn", code: "MOCTREOMATVIET",image: "/gifts/3.svg", banner: "/gifts/banners/phu-kien-dinh-kem-khan.jpg",segmentColor: "#fde047", textColor: "#1e3a8a" },
-  { slot: 4, name: "Quai treo ly Mắt Việt",             short: "Quai treo\nly",      code: "QUAITREOLYMV",  image: "/gifts/4.svg", banner: "/gifts/banners/quai-deo-ly.jpg",           segmentColor: "#ffffff", textColor: "#1e3a8a" },
-  { slot: 5, name: "Gương móc khóa Mắt Việt",           short: "Gương\nmóc khóa",    code: "MKG-SSM009",    image: "/gifts/5.svg", banner: "/gifts/banners/guong-moc-khoa.jpg",        segmentColor: "#1e3a8a", textColor: "#fde047" },
-  { slot: 6, name: "Hộp đựng kính BD117",               short: "Hộp đựng\nkính 1",   code: "HK-BD117",      image: "/gifts/6.svg", banner: "/gifts/banners/hop-kinh-BD117.jpg",        segmentColor: "#dc2626", textColor: "#ffffff" },
-  { slot: 7, name: "Hộp đựng kính BD054",               short: "Hộp đựng\nkính 2",   code: "HK-BD054",      image: "/gifts/7.svg", banner: "/gifts/banners/hop-dung-kinh-BD054.jpg",   segmentColor: "#fde047", textColor: "#1e3a8a" },
+  { slot: 1, name: "Giá đỡ điện thoại mascot Mắt Việt", short: "Giá đỡ\nđiện thoại", code: "GIADODT",        image: "/gifts/gift-1.png", banner: "/gifts/banners/gia-do-dien-thoai.jpg",     segmentColor: "#1e3a8a", textColor: "#fde047" },
+  { slot: 2, name: "Quạt xếp cầm tay",                  short: "Quạt xếp\ncầm tay",  code: "QUATXEPCAMTAY", image: "/gifts/gift-2.png", banner: "/gifts/banners/quat-cam-tay.jpg",          segmentColor: "#dc2626", textColor: "#ffffff" },
+  { slot: 3, name: "Phụ kiện đính kèm khăn",            short: "Phụ kiện\nkèm khăn", code: "MOCTREOMATVIET",image: "/gifts/gift-3.png", banner: "/gifts/banners/phu-kien-dinh-kem-khan.jpg",segmentColor: "#fde047", textColor: "#1e3a8a" },
+  { slot: 4, name: "Quai treo ly Mắt Việt",             short: "Quai treo\nly",      code: "QUAITREOLYMV",  image: "/gifts/gift-4.png", banner: "/gifts/banners/quai-deo-ly.jpg",           segmentColor: "#ffffff", textColor: "#1e3a8a" },
+  { slot: 5, name: "Gương móc khóa Mắt Việt",           short: "Gương\nmóc khóa",    code: "MKG-SSM009",    image: "/gifts/gift-5.png", banner: "/gifts/banners/guong-moc-khoa.jpg",        segmentColor: "#1e3a8a", textColor: "#fde047" },
+  { slot: 6, name: "Hộp đựng kính BD117",               short: "Hộp đựng\nkính 1",   code: "HK-BD117",      image: "/gifts/gift-6.png", banner: "/gifts/banners/hop-kinh-BD117.jpg",        segmentColor: "#dc2626", textColor: "#ffffff" },
+  { slot: 7, name: "Hộp đựng kính BD054",               short: "Hộp đựng\nkính 2",   code: "HK-BD054",      image: "/gifts/gift-7.png", banner: "/gifts/banners/hop-dung-kinh-BD054.jpg",   segmentColor: "#fde047", textColor: "#1e3a8a" },
 ];
 
 const SEGMENT_DEG = 360 / GIFTS.length;
@@ -332,17 +332,17 @@ export default function HungVuongPage() {
                         stroke="#1e3a8a"
                         strokeWidth="0.5"
                       />
-                      {/* Icon placeholder */}
-                      <circle cx={iconPos.x} cy={iconPos.y} r="11" fill="#ffffff" opacity="0.95" />
-                      <text
-                        x={iconPos.x}
-                        y={iconPos.y + 5}
-                        textAnchor="middle"
-                        fontSize="12"
-                        fontFamily="sans-serif"
-                      >
-                        {["📱", "🪭", "🧣", "🥤", "🔑", "👓", "📦"][i]}
-                      </text>
+                      {/* Transparent gift image — counter-rotated so it stays radially aligned */}
+                      <g transform={`rotate(${mid}, ${iconPos.x}, ${iconPos.y})`}>
+                        <image
+                          href={g.image}
+                          x={iconPos.x - 14}
+                          y={iconPos.y - 14}
+                          width="28"
+                          height="28"
+                          preserveAspectRatio="xMidYMid meet"
+                        />
+                      </g>
                       {/* Label */}
                       <text
                         x={labelPos.x}
