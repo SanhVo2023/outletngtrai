@@ -116,6 +116,15 @@ export default function HungVuongPage() {
     }
   }
 
+  // Preload the winning banner as soon as we know which gift was allocated.
+  // Buys ~5s of loading time (form latency + spin animation) before the result
+  // screen actually renders the <Image>, so it appears instantly.
+  useEffect(() => {
+    if (!wonGift?.banner) return;
+    const img = new window.Image();
+    img.src = wonGift.banner;
+  }, [wonGift]);
+
   // Fire "notify" when result becomes visible — SMS delivery syncs with popup
   useEffect(() => {
     if (formState !== "result" || notifiedRef.current || !phoneRef.current) return;
@@ -387,7 +396,7 @@ export default function HungVuongPage() {
 
       {/* ===== STATE: RESULT ===== */}
       {formState === "result" && wonGift && (
-        <section className="relative z-10 flex-1 flex flex-col items-center justify-start px-4 py-5 bg-[#ede0c6]">
+        <section className="relative z-10 flex-1 flex flex-col items-center justify-start px-4 py-5">
           <div className="animate-fade-in-up w-full max-w-sm mx-auto">
             {/* Congrats ribbon */}
             <div className="text-center mb-3">
@@ -398,8 +407,8 @@ export default function HungVuongPage() {
               </div>
             </div>
 
-            {/* Gift banner — matches the LẬT HÌNH LIỀN TAY aesthetic */}
-            <div className="rounded-2xl overflow-hidden shadow-2xl shadow-black/30 border-4 border-[#fde047] bg-[#ede0c6]">
+            {/* Gift banner — transparent frame, image stands on its own */}
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-black/30">
               <Image
                 src={wonGift.banner}
                 alt={wonGift.name}
@@ -409,16 +418,6 @@ export default function HungVuongPage() {
                 unoptimized
                 priority
               />
-            </div>
-
-            {/* Voucher code line */}
-            <div className="mt-3 bg-white rounded-xl border-2 border-[#1e3a8a]/15 px-4 py-2 text-center">
-              <p className="text-[#1e3a8a]/50 text-[10px] uppercase tracking-wider font-semibold">
-                Mã phần quà
-              </p>
-              <p className="text-[#1e3a8a] text-base font-black tracking-widest font-mono">
-                {wonGift.code}
-              </p>
             </div>
 
             {/* SMS + store info */}
