@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState, type FormEvent } from "react";
 
-const GAS_URL = "https://script.google.com/macros/s/AKfycbydUC8f45a15Rmp7G7aa1m0f2a9PP7UbCRa0Y7SDD6Infk8Vqrs1KRpaBLyW9mw-qb2/exec";
+const GAS_URL = "https://script.google.com/macros/s/AKfycbyU1tgi50uyUN3YtwrkITk9QVaqy0kWzJyaZEhs2heik84Nmlon4imfx1V-nUwfk9N3/exec";
 
 type FormState = "idle" | "submitting" | "ready" | "spinning" | "result" | "error";
 
