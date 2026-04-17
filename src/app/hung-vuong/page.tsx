@@ -12,20 +12,21 @@ type Gift = {
   name: string;
   short: string;
   code: string;
-  image: string;
+  image: string;   // placeholder icon for wheel segment
+  banner: string;  // full "winning" banner shown on result screen
   segmentColor: string;
   textColor: string;
 };
 
 // 7 gift slots matching the GAS Gifts sheet
 const GIFTS: Gift[] = [
-  { slot: 1, name: "Giá đỡ điện thoại mascot", short: "Giá đỡ\nđiện thoại",  code: "GIADODT",        image: "/gifts/1.svg", segmentColor: "#1e3a8a", textColor: "#fde047" },
-  { slot: 2, name: "Quạt xếp cầm tay",          short: "Quạt xếp\ncầm tay",   code: "QUATXEPCAMTAY", image: "/gifts/2.svg", segmentColor: "#dc2626", textColor: "#ffffff" },
-  { slot: 3, name: "Phụ kiện đính kèm khăn",    short: "Phụ kiện\nkèm khăn",  code: "MOCTREOMATVIET",image: "/gifts/3.svg", segmentColor: "#fde047", textColor: "#1e3a8a" },
-  { slot: 4, name: "Quai treo ly Mắt Việt",     short: "Quai treo\nly",       code: "QUAITREOLYMV",  image: "/gifts/4.svg", segmentColor: "#ffffff", textColor: "#1e3a8a" },
-  { slot: 5, name: "Gương móc khóa Mắt Việt",   short: "Gương\nmóc khóa",     code: "MKG-SSM009",    image: "/gifts/5.svg", segmentColor: "#1e3a8a", textColor: "#fde047" },
-  { slot: 6, name: "Hộp đựng kính BD117",       short: "Hộp đựng\nkính 1",    code: "HK-BD117",      image: "/gifts/6.svg", segmentColor: "#dc2626", textColor: "#ffffff" },
-  { slot: 7, name: "Hộp đựng kính BD054",       short: "Hộp đựng\nkính 2",    code: "HK-BD054",      image: "/gifts/7.svg", segmentColor: "#fde047", textColor: "#1e3a8a" },
+  { slot: 1, name: "Giá đỡ điện thoại mascot Mắt Việt", short: "Giá đỡ\nđiện thoại", code: "GIADODT",        image: "/gifts/1.svg", banner: "/gifts/banners/gia-do-dien-thoai.jpg",     segmentColor: "#1e3a8a", textColor: "#fde047" },
+  { slot: 2, name: "Quạt xếp cầm tay",                  short: "Quạt xếp\ncầm tay",  code: "QUATXEPCAMTAY", image: "/gifts/2.svg", banner: "/gifts/banners/quat-cam-tay.jpg",          segmentColor: "#dc2626", textColor: "#ffffff" },
+  { slot: 3, name: "Phụ kiện đính kèm khăn",            short: "Phụ kiện\nkèm khăn", code: "MOCTREOMATVIET",image: "/gifts/3.svg", banner: "/gifts/banners/phu-kien-dinh-kem-khan.jpg",segmentColor: "#fde047", textColor: "#1e3a8a" },
+  { slot: 4, name: "Quai treo ly Mắt Việt",             short: "Quai treo\nly",      code: "QUAITREOLYMV",  image: "/gifts/4.svg", banner: "/gifts/banners/quai-deo-ly.jpg",           segmentColor: "#ffffff", textColor: "#1e3a8a" },
+  { slot: 5, name: "Gương móc khóa Mắt Việt",           short: "Gương\nmóc khóa",    code: "MKG-SSM009",    image: "/gifts/5.svg", banner: "/gifts/banners/guong-moc-khoa.jpg",        segmentColor: "#1e3a8a", textColor: "#fde047" },
+  { slot: 6, name: "Hộp đựng kính BD117",               short: "Hộp đựng\nkính 1",   code: "HK-BD117",      image: "/gifts/6.svg", banner: "/gifts/banners/hop-kinh-BD117.jpg",        segmentColor: "#dc2626", textColor: "#ffffff" },
+  { slot: 7, name: "Hộp đựng kính BD054",               short: "Hộp đựng\nkính 2",   code: "HK-BD054",      image: "/gifts/7.svg", banner: "/gifts/banners/hop-dung-kinh-BD054.jpg",   segmentColor: "#fde047", textColor: "#1e3a8a" },
 ];
 
 const SEGMENT_DEG = 360 / GIFTS.length;
@@ -386,43 +387,57 @@ export default function HungVuongPage() {
 
       {/* ===== STATE: RESULT ===== */}
       {formState === "result" && wonGift && (
-        <section className="relative z-10 flex-1 flex flex-col items-center justify-center px-5 py-8">
-          <div className="animate-fade-in-up bg-[#1e3a8a] rounded-3xl p-6 text-center shadow-2xl shadow-black/30 max-w-sm w-full border-4 border-[#fde047]">
-            <p className="text-[#fde047] text-xs font-black uppercase tracking-widest mb-2">
-              🎉 Chúc Mừng Quý Khách 🎉
-            </p>
-            <h2 className="text-white text-xl font-bold mb-4">Bạn đã trúng:</h2>
-
-            <div className="bg-white rounded-2xl p-5 mb-4">
-              <div className="w-24 h-24 mx-auto mb-3 rounded-full overflow-hidden flex items-center justify-center bg-[#fde047]">
-                <Image
-                  src={wonGift.image}
-                  alt={wonGift.name}
-                  width={96}
-                  height={96}
-                  className="w-full h-full object-contain"
-                  unoptimized
-                />
+        <section className="relative z-10 flex-1 flex flex-col items-center justify-start px-4 py-5 bg-[#ede0c6]">
+          <div className="animate-fade-in-up w-full max-w-sm mx-auto">
+            {/* Congrats ribbon */}
+            <div className="text-center mb-3">
+              <div className="inline-flex items-center gap-2 bg-[#1e3a8a] text-[#fde047] text-xs font-black uppercase tracking-widest px-4 py-1.5 rounded-full shadow-lg">
+                <span>🎉</span>
+                <span>Chúc Mừng Quý Khách</span>
+                <span>🎉</span>
               </div>
-              <p className="text-[#1e3a8a] text-lg font-black leading-tight mb-1">
-                {wonGift.name}
+            </div>
+
+            {/* Gift banner — matches the LẬT HÌNH LIỀN TAY aesthetic */}
+            <div className="rounded-2xl overflow-hidden shadow-2xl shadow-black/30 border-4 border-[#fde047] bg-[#ede0c6]">
+              <Image
+                src={wonGift.banner}
+                alt={wonGift.name}
+                width={800}
+                height={800}
+                className="w-full h-auto block"
+                unoptimized
+                priority
+              />
+            </div>
+
+            {/* Voucher code line */}
+            <div className="mt-3 bg-white rounded-xl border-2 border-[#1e3a8a]/15 px-4 py-2 text-center">
+              <p className="text-[#1e3a8a]/50 text-[10px] uppercase tracking-wider font-semibold">
+                Mã phần quà
               </p>
-              <p className="text-[#1e3a8a]/50 text-[10px] uppercase tracking-wider font-mono">
+              <p className="text-[#1e3a8a] text-base font-black tracking-widest font-mono">
                 {wonGift.code}
               </p>
             </div>
 
-            <div className="bg-white/10 rounded-xl p-3 text-left">
-              <p className="text-[#fde047] text-[11px] font-bold uppercase tracking-wider mb-1">📱 Tin nhắn đã được gửi</p>
-              <p className="text-white/90 text-xs leading-relaxed">
-                Mã quà đã được gửi qua SMS. Vui lòng mang SMS đến:
+            {/* SMS + store info */}
+            <div className="mt-3 bg-[#1e3a8a] rounded-xl p-4">
+              <div className="flex items-center gap-2 mb-1.5">
+                <span className="text-lg">📱</span>
+                <p className="text-[#fde047] text-[11px] font-black uppercase tracking-widest">
+                  Tin nhắn đã được gửi
+                </p>
+              </div>
+              <p className="text-white/80 text-xs leading-relaxed mb-2">
+                Mã quà đã được gửi qua SMS. Vui lòng mang tin nhắn đến cửa hàng để nhận quà:
               </p>
-              <p className="text-white text-sm font-bold mt-1.5">
-                Mắt Việt Hùng Vương
-              </p>
-              <p className="text-white/70 text-[11px]">
-                Tầng 1 Hùng Vương Plaza, 126 Hồng Bàng
-              </p>
+              <div className="bg-white/10 rounded-lg px-3 py-2">
+                <p className="text-white text-sm font-black">Mắt Việt Hùng Vương</p>
+                <p className="text-white/70 text-[11px]">
+                  Tầng 1 Hùng Vương Plaza, 126 Hồng Bàng, P. Chợ Lớn, TP.HCM
+                </p>
+              </div>
             </div>
           </div>
         </section>
