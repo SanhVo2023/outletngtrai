@@ -191,7 +191,7 @@ export default function HungVuongPage() {
       </header>
 
       {/* ===== HERO ===== */}
-      {formState !== "spinning" && formState !== "result" && (
+      {formState !== "result" && (
         <section className="relative z-10 px-4 pt-2 pb-3 text-center">
           <h1 className="text-outline-navy text-[42px] sm:text-[52px] font-black tracking-tight leading-none mb-2">
             GRAND OPENING
